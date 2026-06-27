@@ -1,0 +1,86 @@
+﻿<Window x:Class="TrackEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrackEditor"
+        xmlns:controls="clr-namespace:SpecificControls;assembly=SpecificControls"
+        xmlns:thisControl="clr-namespace:TrackEditor.Controls"
+        xmlns:other="clr-namespace:SpecificControls.Other;assembly=SpecificControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Panel.ZIndex="1000">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open Track" Click="MenuItem_Click_1"/>
+                <MenuItem Header="_Save Track"/>
+                <Separator/>
+                <MenuItem Header="Save Image" Click="MenuItem_Click"/>
+                <MenuItem Header="Save Selected Image" Click="MenuItem_Click_2"/>
+                <Separator/>
+                <MenuItem Header="E_xit"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo" Click="MenuItem_Click_5"/>
+                <MenuItem Header="_Redo" Click="MenuItem_Click_6"/>
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="Rasterize" Click="Rasterize_Click"/>
+                <MenuItem Header="Rasterize Line" Click="MenuItem_Click_4"/>
+                <MenuItem Header="Side Offset" Click="Offset_Click"/>
+                <MenuItem Header="Insert Point" Click="MenuItem_Click_3"/>
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="Anchor Edit" x:Name="AnchorEditCheck"
+                    IsCheckable="True"
+                    Click="Mode_Click"/>
+                <MenuItem Header="Segment Select" x:Name="SegmentEditCheck"
+                    IsCheckable="True"
+                    IsChecked="True"
+                    Click="Mode_Click"/>
+                <MenuItem Header="None" x:Name="NoneEditCheck"
+                    IsCheckable="True"
+                    Click="Mode_Click"/>
+                <Separator/>
+                <MenuItem Header="Show Cell Graphs"
+                    IsCheckable="True"
+                    IsChecked="True"
+                    Checked="MenuItem_Checked"
+                    Unchecked="MenuItem_Unchecked"/>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+        <other:LayerShower 
+            x:Name="LayerShower" 
+            CellInfoCollection="{Binding CellInfos, Source={x:Static local:MainEditor.Instance}}"
+            SelectedCell="{Binding SelectedCell, Source={x:Static local:MainEditor.Instance}}"
+            Center="{Binding Center, ElementName=Editor}"
+            ScaleX="{Binding ScaleX, ElementName=Editor}"
+            ScaleY="{Binding ScaleY, ElementName=Editor}"/>
+        <controls:BezierEditor x:Name="Editor"
+            SelectedGraph="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}}"/>
+            <StackPanel Grid.Column="1">
+                <other:LayerSelector
+                    x:Name="CellSelector"
+                    Height="120"
+                    CellInfoCollection="{Binding CellInfos, Source={x:Static local:MainEditor.Instance}}"
+                    SelectedCell="{Binding SelectedCell, Source={x:Static local:MainEditor.Instance}, Mode=TwoWay}"/>
+                <other:LayerSelector
+                    x:Name="GraphSelector"
+                    Height="120"
+                    CellInfoCollection="{Binding GraphInfos, Source={x:Static local:MainEditor.Instance}}"
+                    SelectedCell="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}, Mode=TwoWay}"/>
+                <thisControl:ChangeGraphRotation
+                    SelectedGraph="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}}"/>
+            </StackPanel>
+    </Grid>
+    </Grid>
+</Window>

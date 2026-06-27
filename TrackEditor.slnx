@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Graph/Graph.csproj" />
+  <Project Path="Controls/Controls.csproj" />
+  <Project Path="Rasterization/Rasterization.csproj" Id="f3bbbad0-96fd-4d49-9a22-c8e197cd8bff" />
+  <Project Path="SpecificControls/SpecificControls.csproj" Id="6527fe57-9495-4d9d-969b-9b3328c05cd4" />
+  <Project Path="TrackEditor/TrackEditor.csproj" />
+</Solution>
