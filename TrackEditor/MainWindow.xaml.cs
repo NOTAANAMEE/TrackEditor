@@ -29,6 +29,8 @@ namespace TrackEditor
             DefaultSegmentEditor.AddCommand(new CenterlineOffsetCommand());
             DefaultSegmentEditor.AddCommand(new RasterizeCommand());
             DefaultSegmentEditor.AddCommand(new RasterizeLineCommand());
+            DefaultSegmentEditor.AddCommand(new SegmentsReverseCommand());
+            DefaultAnchorEditor.AddCommand(new TryAddSegmentCommand());
             Editor.EditorState = _segmentEditor;
         }
 
@@ -162,14 +164,29 @@ namespace TrackEditor
             window.ShowDialog();
         }
 
-        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        private void UndoCmd(object sender, RoutedEventArgs e)
         {
             MainEditor.Instance.SelectedGraph?.Graph.Undo();
         }
 
-        private void MenuItem_Click_6(object sender, RoutedEventArgs e)
+        private void RedoCmd(object sender, RoutedEventArgs e)
         {
             MainEditor.Instance.SelectedGraph?.Graph.Redo();
+        }
+
+        private void SegmentsReverseCmd(object sender, RoutedEventArgs e)
+        {
+            Editor.RunCommand(SegmentsReverseCommand.CommandName);
+        }
+
+        private void ConnectPointCmd(object sender, RoutedEventArgs e)
+        {
+            Editor.RunCommand(TryAddSegmentCommand.CommandName);
+        }
+
+        private void AddPointCmd(object sender, RoutedEventArgs e)
+        {
+            Editor.RunCommand("DefaultAnchorEditor.AddPointModeCommand");
         }
     }
 }

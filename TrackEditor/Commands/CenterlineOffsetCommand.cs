@@ -3,12 +3,8 @@ using Graph.Graph.Reference;
 using SpecificControls.Editor;
 using SpecificControls.Editor.Default;
 using SpecificControls.Selection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Documents;
 
-namespace TrackEditor;
+namespace TrackEditor.Commands;
 
 public struct CenterlineOffsetCommandParameter
 {

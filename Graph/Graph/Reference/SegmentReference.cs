@@ -11,13 +11,13 @@ public class SegmentReference(AnchorReference from, AnchorReference to)
 
     public readonly AnchorReference To = to;
 
-    private BPoint P0 => From.Position;
+    public BPoint P0 => From.Position;
 
-    private BPoint P1 => From.PNext;
+    public BPoint P1 => From.PNext;
 
-    private BPoint P2 => To.PLast;
+    public BPoint P2 => To.PLast;
 
-    private BPoint P3 => To.Position;
+    public BPoint P3 => To.Position;
 
     public BBezierSegment Segment => new(P0, P1, P2, P3);
 
