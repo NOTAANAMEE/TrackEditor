@@ -25,14 +25,18 @@
                 <MenuItem Header="E_xit"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo" Click="MenuItem_Click_5"/>
-                <MenuItem Header="_Redo" Click="MenuItem_Click_6"/>
+                <MenuItem Header="_Undo" Click="UndoCmd"/>
+                <MenuItem Header="_Redo" Click="RedoCmd"/>
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="Rasterize" Click="Rasterize_Click"/>
                 <MenuItem Header="Rasterize Line" Click="MenuItem_Click_4"/>
                 <MenuItem Header="Side Offset" Click="Offset_Click"/>
                 <MenuItem Header="Insert Point" Click="MenuItem_Click_3"/>
+                <MenuItem Header="Reverse Segments" Click="SegmentsReverseCmd"/>
+                <MenuItem Header="Connect Points" Click="ConnectPointCmd"/>
+                <Separator/>
+                <MenuItem Header="Add Point" Click="AddPointCmd"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="Anchor Edit" x:Name="AnchorEditCheck"

@@ -99,6 +99,29 @@ public class SegmentsAddTransform(IEnumerable<SegmentReference> references): Com
     }
 }
 
+public class SegmentsAddPropertyTransform(
+    IEnumerable<SegmentReference> references,
+    IEnumerable<MyProperty> properties
+    ) : CommandBase
+{
+    private readonly MyProperty[] _properties = [.. properties];
+
+    private readonly SegmentReference[] _segments = [.. references];
+
+    public override void Execute(BezierGraph graph)
+    {
+        var i = 0;
+        foreach (var reference in _segments)
+            graph.AddSegmentWithProperty(reference, _properties[i++]);
+    }
+
+    public override void Undo(BezierGraph graph)
+    {
+        foreach (var reference in _segments)
+            graph.RemoveSegment(reference);
+    }
+}
+
 public class SegmentRemoveTransform(SegmentReference reference, BezierGraph graph) : CommandBase
 {
     private readonly MyProperty _property = graph[reference];

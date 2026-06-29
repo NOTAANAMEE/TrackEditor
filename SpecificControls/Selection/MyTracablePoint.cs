@@ -22,6 +22,8 @@ public class MyTracablePoint : TracablePoint, IDisposable
 
     public override Point WorldPosition => GetPosition();
 
+    public AnchorReference Anchor => _anchor;
+
     public MyTracablePoint(
         AnchorReference anchor, GraphChanger graph, PositionType type,
         Func<bool> getMovable)
