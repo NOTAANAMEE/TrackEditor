@@ -4,10 +4,6 @@ using Controls.Collection;
 using Graph.Graph;
 using Graph.Graph.Reference;
 using SpecificControls.Selection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Media.Media3D;
 
 namespace SpecificControls.Canvases;
 

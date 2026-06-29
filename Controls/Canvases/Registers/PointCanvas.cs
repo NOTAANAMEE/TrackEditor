@@ -15,7 +15,7 @@ public partial class PointCanvas
         DependencyPropertyChangedEventArgs e)
     {
         if (d is not PointCanvas canvas) return;
-        canvas.UpdateThumbCanvasPosition();
+        canvas.ForcePositionUpdate();
     }
 
     public static readonly DependencyProperty ScaleYProperty

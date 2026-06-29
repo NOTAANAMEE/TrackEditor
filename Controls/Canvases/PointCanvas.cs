@@ -68,8 +68,18 @@ public partial class PointCanvas : MyCanvas
         PointList.CollectionChanged += PointList_CollectionChanged;
         SelectedRect += PointCanvas_SelectedRect;
         OnClick += (s, e) => ClearSelectedThumbs();
-        SizeChanged += (s, e) => UpdateThumbCanvasPosition();
         _manager.SelectionChanged += Manager_SelectionChanged;
+        SizeChanged += (s, e) => ForcePositionUpdate();
+        IsVisibleChanged += (s, e) => ForcePositionUpdate();
+    }
+
+
+    private void ForcePositionUpdate()
+    {
+        foreach (var thumb in Children.OfType<MyThumb>())
+        {
+            Thumb_WorldPositionChanged(thumb, thumb._point.WorldPosition);
+        }
     }
 
     private void RemoveThumbs(IList? points)
@@ -305,17 +315,6 @@ public partial class PointCanvas : MyCanvas
         _manager.Clear();
     }
     #endregion
-
-    private void UpdateThumbCanvasPosition()
-    {
-        foreach (var control in Children)
-        {
-            if (control is not MyThumb thumb) continue;
-            var pos = WorldToCanvasPoint(thumb.WorldPoint);
-            SetLeft(thumb, pos.X - thumb.Width / 2);
-            SetTop(thumb, pos.Y - thumb.Height / 2);
-        }
-    }
 
     private Point WorldToCanvasPoint(Point worldPos)
     {

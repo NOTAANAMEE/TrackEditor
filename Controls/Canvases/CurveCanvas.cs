@@ -68,13 +68,19 @@ public partial class CurveCanvas : MyCanvas
 
     private void SegmentList_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        if (e.Action == NotifyCollectionChangedAction.Reset) _manager.Clear();
+
         if (e.OldItems != null)
         {
             foreach (var item in e.OldItems)
             {
                 if (item is TracableSegment segment)
+                {
                     segment.ControlPointChanged -= Segment_ControlPointChanged;
+                    _manager.Remove(segment);
+                }
             }
+
         }
 
         if (e.NewItems != null)

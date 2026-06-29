@@ -8,7 +8,7 @@
         xmlns:thisControl="clr-namespace:TrackEditor.Controls"
         xmlns:other="clr-namespace:SpecificControls.Other;assembly=SpecificControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Track Editor" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,7 +17,7 @@
         <Menu Panel.ZIndex="1000">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Track" Click="MenuItem_Click_1"/>
-                <MenuItem Header="_Save Track"/>
+                <MenuItem Header="New Graph" Click="NewGraph"/>
                 <Separator/>
                 <MenuItem Header="Save Image" Click="MenuItem_Click"/>
                 <MenuItem Header="Save Selected Image" Click="MenuItem_Click_2"/>

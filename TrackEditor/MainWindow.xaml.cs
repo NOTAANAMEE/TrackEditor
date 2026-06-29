@@ -188,5 +188,12 @@ namespace TrackEditor
         {
             Editor.RunCommand("DefaultAnchorEditor.AddPointModeCommand");
         }
+
+        private void NewGraph(object sender, RoutedEventArgs e)
+        {
+            var info = new GraphInfo(new GraphChanger(new BezierGraph()));
+            MainEditor.Instance.GraphInfos.Add(info);
+            MainEditor.Instance.SelectedGraph = info;
+        }
     }
 }
