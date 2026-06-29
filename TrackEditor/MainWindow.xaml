@@ -84,6 +84,8 @@
                     SelectedCell="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}, Mode=TwoWay}"/>
                 <thisControl:ChangeGraphRotation
                     SelectedGraph="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}}"/>
+                <thisControl:ChangeGraphScale
+                    SelectedGraph="{Binding SelectedGraph, Source={x:Static local:MainEditor.Instance}}"/>
             </StackPanel>
     </Grid>
     </Grid>

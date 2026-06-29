@@ -23,7 +23,7 @@ public static class ImageSaver
         var visual = new DrawingVisual();
         using (var dc = visual.RenderOpen())
         {
-            foreach (var cell in cells)
+            foreach (var cell in cells.Reverse())
             {
                 var curLeft = cell.TopLeft.X - left;
                 var curTop = cell.TopLeft.Y - top;

@@ -63,7 +63,12 @@ namespace TrackEditor.Controls
         private void Rotation_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
-            if (!double.TryParse(RotationTxt.Text, out var result)) return;
+            if (!double.TryParse(RotationTxt.Text, out var result))
+            {
+                MessageBox.Show("Invalid Value!");
+                RotationTxt.Text = RotationBar.Value.ToString();
+                return;
+            }
             _textDisable = true;
             RotationBar.Value = result;
             _textDisable = false;
