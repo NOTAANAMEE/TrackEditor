@@ -4,16 +4,13 @@ using Graph.Graph.Reference;
 using SpecificControls.Editor;
 using SpecificControls.Editor.Default;
 using SpecificControls.Selection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 
 namespace TrackEditor.Commands;
 
 public class TryAddSegmentCommand() : EditorStateCommand(CommandName)
 {
-    public static readonly string CommandName = "AABBCCDDEE";
+    public static readonly string CommandName = "AnchorCommand:TryAddSegmentCommand";
 
     public override void Signal(EditorState state, EditorSignalArgs args)
     {

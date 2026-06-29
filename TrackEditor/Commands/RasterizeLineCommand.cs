@@ -10,7 +10,7 @@ namespace TrackEditor.Commands;
 
 public class RasterizeLineCommand() : EditorStateCommand(CommandName)
 {
-    public static readonly string CommandName = "AAABBBCCC4";
+    public static readonly string CommandName = "SegmentCommand:RasterizeLineCommand";
 
     private static readonly string NoSelectableMessage = "";
 

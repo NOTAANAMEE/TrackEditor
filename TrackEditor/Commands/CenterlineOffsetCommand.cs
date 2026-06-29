@@ -15,7 +15,7 @@ public struct CenterlineOffsetCommandParameter
 
 public class CenterlineOffsetCommand() : EditorStateCommand(CommandName)
 {
-    public static readonly string CommandName = "AAABBBCCC";
+    public static readonly string CommandName = "SegmentCommand:CenterlineOffsetCommand";
 
     public override void Signal(EditorState state, EditorSignalArgs args)
     {

@@ -11,7 +11,7 @@ namespace TrackEditor.Commands;
 
 internal class SegmentsReverseCommand() : EditorStateCommand(CommandName)
 {
-    public static readonly string CommandName = "ABCDE";
+    public static readonly string CommandName = "SegmentCommand:ReverseSegmentCommand";
 
     public override void Signal(EditorState state, EditorSignalArgs args)
     {
