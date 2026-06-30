@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TrackEditor.Commands;
 using TrackEditor.Files;
+using TrackEditor.Windows;
 using TrackEditor.Windowses;
 
 namespace TrackEditor
@@ -194,6 +195,28 @@ namespace TrackEditor
             var info = new GraphInfo(new GraphChanger(new BezierGraph()));
             MainEditor.Instance.GraphInfos.Add(info);
             MainEditor.Instance.SelectedGraph = info;
+        }
+
+        private void MergeGraph(object sender, RoutedEventArgs e)
+        {
+            if (MainEditor.Instance.SelectedCell == null)
+            {
+                MessageBox.Show("No graph!");
+                return;
+            }
+            var window = new GraphMergePopup();
+            window.ShowDialog();
+        }
+
+        private void MergeCell(object sender, RoutedEventArgs e)
+        {
+            if (MainEditor.Instance.SelectedCell == null)
+            {
+                MessageBox.Show("Select a cell map before started!");
+                return;
+            }
+            var window = new CellMergePopup();
+            window.ShowDialog();
         }
     }
 }

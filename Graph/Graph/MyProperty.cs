@@ -33,5 +33,12 @@ public class MyProperty
     }
 
 
-
+    public MyProperty Copy()
+    {
+        return new MyProperty()
+        {
+            DefaultValue = DefaultValue,
+            _properties = new Dictionary<string, string>(_properties)
+        };
+    }
 }

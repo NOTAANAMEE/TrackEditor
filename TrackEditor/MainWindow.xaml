@@ -32,11 +32,14 @@
                 <MenuItem Header="Rasterize" Click="Rasterize_Click"/>
                 <MenuItem Header="Rasterize Line" Click="MenuItem_Click_4"/>
                 <MenuItem Header="Side Offset" Click="Offset_Click"/>
-                <MenuItem Header="Insert Point" Click="MenuItem_Click_3"/>
                 <MenuItem Header="Reverse Segments" Click="SegmentsReverseCmd"/>
-                <MenuItem Header="Connect Points" Click="ConnectPointCmd"/>
                 <Separator/>
                 <MenuItem Header="Add Point" Click="AddPointCmd"/>
+                <MenuItem Header="Insert Point" Click="MenuItem_Click_3"/>
+                <MenuItem Header="Connect Points" Click="ConnectPointCmd"/>
+                <Separator/>
+                <MenuItem Header="Merge Graphs" Click="MergeGraph"/>
+                <MenuItem Header="Merge Cells" Click="MergeCell"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="Anchor Edit" x:Name="AnchorEditCheck"

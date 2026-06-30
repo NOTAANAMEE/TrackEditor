@@ -41,6 +41,26 @@ public class AnchorsAddTransform(IEnumerable<AnchorReference> references) : Comm
     }
 }
 
+public class AnchorsAddTransformWithProperty(IEnumerable<AnchorReference> references,
+    IEnumerable<MyProperty> properties) : CommandBase
+{
+    private readonly MyProperty[] _properties = [.. properties];
+    private readonly AnchorReference[] _references = [.. references];
+
+    public override void Execute(BezierGraph graph)
+    {
+        var i = 0;
+        foreach (var reference in _references)
+            graph.AddAnchorWithProperty(reference, _properties[i++]);
+    }
+
+    public override void Undo(BezierGraph graph)
+    {
+        foreach (AnchorReference reference in _references)
+            graph.RemoveAnchor(reference);
+    }
+}
+
 
 public class SimpleAnchorsRemoveTransform(
     IEnumerable<AnchorReference> anchors, BezierGraph graph): CommandBase
