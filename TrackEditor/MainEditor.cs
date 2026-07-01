@@ -35,4 +35,8 @@ public partial class MainEditor: DependencyObject
         get => (CellInfo?)GetValue(SelectedCellProperty);
         set => SetValue(SelectedCellProperty, value);
     }
+
+    public IEnumerable<IInfo> UnselectedGraphs => GraphInfos.Where(a => a != SelectedGraph);
+
+    public IEnumerable<IInfo> UnselectedCells => CellInfos.Where(a => a != SelectedCell);
 }

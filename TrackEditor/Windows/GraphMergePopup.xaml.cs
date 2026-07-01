@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TrackEditor.Operations;
 
 namespace TrackEditor.Windows
 {
@@ -20,14 +21,11 @@ namespace TrackEditor.Windows
     /// </summary>
     public partial class GraphMergePopup : Window
     {
-        private GraphInfo _selected;
 
         public GraphMergePopup()
         {
             InitializeComponent();
-            var graphInfos = MainEditor.Instance.GraphInfos;
-            _selected = MainEditor.Instance.SelectedGraph ?? throw new Exception();
-            ListBox.ItemsSource = graphInfos.Where(a => a != _selected);
+            ListBox.ItemsSource = MainEditor.Instance.UnselectedGraphs;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,11 +35,7 @@ namespace TrackEditor.Windows
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var cmds = ListBox.SelectedItems
-                .OfType<GraphInfo>()
-                .Select(GraphMergeHelper.MergeGraph);
-            var cmd = new ComplexTransform([.. cmds]);
-            _selected.Graph.Execute(cmd);
+            GraphMergeOperation.MergeGraph(ListBox.SelectedItems);
             Close();
         }
     }

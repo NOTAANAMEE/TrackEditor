@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TrackEditor.Operations;
 
 namespace TrackEditor.Windowses
 {
@@ -30,35 +31,18 @@ namespace TrackEditor.Windowses
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var initialScaleText = InitialScaleTxt.Text;
-            var scaleXText = ScaleXTxt.Text;
-            var scaleYText = ScaleYTxt.Text;
-            if (Path == null)
+            var parseCheck = new ParseCheck()
+                .CheckPath(Path, "Path", out string path)
+                .ParseDouble(InitialScaleTxt.Text, "Initial Scale", out double initialScale)
+                .ParseDouble(ScaleXTxt.Text, "Scale X", out double scaleX)
+                .ParseDouble(ScaleYTxt.Text, "Scale Y", out double scaleY);
+            if (!parseCheck.All)
             {
-                MessageBox.Show("Invalid Path");
+                MessageBox.Show(parseCheck.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!double.TryParse(initialScaleText, out var initialScale))
-            {
-                MessageBox.Show("Initial Scaling is not a valid number");
-                return;
-            }
-            if (!double.TryParse(scaleXText, out var scaleX))
-            {
-                MessageBox.Show("Scale X is not a valid number");
-                return;
-            }
-            if (!double.TryParse(scaleYText, out var scaleY))
-            {
-                MessageBox.Show("Scale X is not a valid number");
-                return;
-            }
-            var arr = JArray.Parse(File.ReadAllText(Path));
-            var graph = new GraphChanger(
-                TrackLoader.ReadGraph(arr, scaleX * initialScale, scaleY * initialScale));
-            var info = new GraphInfo(graph);
-            MainEditor.Instance.GraphInfos.Add(info);
-            MainEditor.Instance.SelectedGraph = info;
+
+            LoadTrackOperation.LoadTrack(path, scaleX, scaleY);
             Close();
         }
 

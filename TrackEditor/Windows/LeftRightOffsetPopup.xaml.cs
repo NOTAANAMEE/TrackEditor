@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TrackEditor.Commands;
+using TrackEditor.Operations;
 
 namespace TrackEditor.Windowses
 {
@@ -34,20 +35,17 @@ namespace TrackEditor.Windowses
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var txt = OffsetText.Text;
-            if (!double.TryParse(txt, out double offset))
+            var parseCheck = new ParseCheck()
+                .ParseDouble(OffsetText.Text, "Offset", out var offset);
+            if (!parseCheck.All)
             {
-                MessageBox.Show($"{txt} is not a valid offset value!");
+                MessageBox.Show(parseCheck.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var param = new CenterlineOffsetCommandParameter()
-            {
-                Left = LeftCheckBox.IsChecked ?? false,
-                Right = RightCheckBox.IsChecked ?? false,
-                Offset = offset
-            };
-            _editor?.RunCommand(
-                CenterlineOffsetCommand.CommandName, param);
+            LeftRightOffsetOperation.ApplyOffset(
+                _editor, offset, 
+                LeftCheckBox.IsChecked ?? false, 
+                RightCheckBox.IsChecked ?? false);
             Close();
         }
     }

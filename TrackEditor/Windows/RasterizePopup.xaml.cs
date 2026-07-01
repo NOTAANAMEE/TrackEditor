@@ -1,6 +1,7 @@
 ﻿using SpecificControls;
 using System.Windows;
 using TrackEditor.Commands;
+using TrackEditor.Operations;
 
 namespace TrackEditor.Windowses
 {
@@ -21,9 +22,7 @@ namespace TrackEditor.Windowses
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (ColorSelector.SelectedColor == null) return;
-            var color = ColorSelector.SelectedColor;
-            _editor?.RunCommand(
-                Command, color.Value);
+            RasterizeOperation.Rasterize(_editor, Command, ColorSelector.SelectedColor.Value);
             Close();
         }
 
