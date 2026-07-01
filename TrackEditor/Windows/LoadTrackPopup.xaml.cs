@@ -42,7 +42,7 @@ namespace TrackEditor.Windowses
                 return;
             }
 
-            LoadTrackOperation.LoadTrack(path, scaleX, scaleY);
+            LoadTrackOperation.LoadTrack(path, scaleX * initialScale, scaleY * initialScale);
             Close();
         }
 

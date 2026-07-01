@@ -1,5 +1,6 @@
 ﻿using SpecificControls.Graph;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
 namespace TrackEditor;
@@ -39,4 +40,16 @@ public partial class MainEditor: DependencyObject
     public IEnumerable<IInfo> UnselectedGraphs => GraphInfos.Where(a => a != SelectedGraph);
 
     public IEnumerable<IInfo> UnselectedCells => CellInfos.Where(a => a != SelectedCell);
+
+    public bool TryGetSelectedGraph([NotNullWhen(true)]out GraphInfo? graph)
+    {
+        graph = SelectedGraph;
+        return graph is not null;
+    }
+
+    public bool TryGetSelectedCell([NotNullWhen(true)] out CellInfo? cell)
+    {
+        cell = SelectedCell;
+        return cell is not null;
+    }
 }

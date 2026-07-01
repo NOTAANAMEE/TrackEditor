@@ -22,7 +22,7 @@
                 <MenuItem Header="Save Image" Click="MenuItem_Click"/>
                 <MenuItem Header="Save Selected Image" Click="MenuItem_Click_2"/>
                 <Separator/>
-                <MenuItem Header="E_xit"/>
+                <MenuItem Header="E_xit" Click="Exit"/>
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Undo" Click="UndoCmd"/>
@@ -41,6 +41,8 @@
                 <Separator/>
                 <MenuItem Header="Merge Graphs" Click="MergeGraph"/>
                 <MenuItem Header="Merge Cells" Click="MergeCell"/>
+                <MenuItem Header="Duplicate Graph" Click="DuplicateGraph"/>
+                <MenuItem Header="Duplicate Cell" Click="DuplicateCell"/> 
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="Anchor Edit" x:Name="AnchorEditCheck"
