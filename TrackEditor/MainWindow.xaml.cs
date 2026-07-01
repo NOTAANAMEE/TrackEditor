@@ -3,11 +3,13 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using SpecificControls.Editor.Default;
 using SpecificControls.Graph;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using TrackEditor.Commands;
 using TrackEditor.Files;
+using TrackEditor.Operations;
 using TrackEditor.Windows;
 using TrackEditor.Windowses;
 
@@ -200,22 +202,14 @@ namespace TrackEditor
 
         private void MergeGraph(object sender, RoutedEventArgs e)
         {
-            if (MainEditor.Instance.SelectedCell == null)
-            {
-                MessageBox.Show("No graph!");
-                return;
-            }
+            if (!TryGetSelectedGraph(out var _)) return;
             var window = new GraphMergePopup();
             window.ShowDialog();
         }
 
         private void MergeCell(object sender, RoutedEventArgs e)
         {
-            if (MainEditor.Instance.SelectedCell == null)
-            {
-                MessageBox.Show("Select a cell map before started!");
-                return;
-            }
+            if (!TryGetSelectedCell(out var _)) return;
             var window = new CellMergePopup();
             window.ShowDialog();
         }
@@ -223,6 +217,37 @@ namespace TrackEditor
         private void Vectorize(object sender, RoutedEventArgs e)
         {
             Editor.RunCommand(VectorizationCommand.CommandName);
+        }
+
+        private void DuplicateGraph(object sender, RoutedEventArgs e)
+        {
+            if (TryGetSelectedGraph(out var selected))
+                DuplicateOperation.DuplicateGraph(selected);
+        }
+
+        private void DuplicateCell(object sender, RoutedEventArgs e)
+        {
+            if (TryGetSelectedCell(out var selected))
+                DuplicateOperation.DuplicateCell(selected);
+        }
+
+        private static bool TryGetSelectedGraph([NotNullWhen(true)]out GraphInfo? graph)
+        {
+            var ret = MainEditor.Instance.TryGetSelectedGraph(out graph);
+            if (!ret) MessageBox.Show("Select a graph before started!");
+            return ret;
+        }
+
+        private static bool TryGetSelectedCell([NotNullWhen(true)] out CellInfo? cell)
+        {
+            var ret = MainEditor.Instance.TryGetSelectedCell(out cell);
+            if (!ret) MessageBox.Show("Select a cell before started!");
+            return ret;
+        }
+
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
