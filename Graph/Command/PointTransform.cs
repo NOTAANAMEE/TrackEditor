@@ -11,6 +11,13 @@ public class PointTransform: CommandBase
 
     private readonly List<PointTransformRecord> transforms = [];
 
+    public PointTransform() { }
+
+    public PointTransform(int expectedCapacity)
+    {
+        transforms = new List<PointTransformRecord>(expectedCapacity);
+    }
+
     public void Add(IEnumerable<PositionChanger> changers)
     {
         foreach(var changer in changers)

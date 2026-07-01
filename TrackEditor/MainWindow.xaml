@@ -33,6 +33,7 @@
                 <MenuItem Header="Rasterize Line" Click="MenuItem_Click_4"/>
                 <MenuItem Header="Side Offset" Click="Offset_Click"/>
                 <MenuItem Header="Reverse Segments" Click="SegmentsReverseCmd"/>
+                <MenuItem Header="Vectorization" Click="Vectorize"/>
                 <Separator/>
                 <MenuItem Header="Add Point" Click="AddPointCmd"/>
                 <MenuItem Header="Insert Point" Click="MenuItem_Click_3"/>

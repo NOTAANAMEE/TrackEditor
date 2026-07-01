@@ -31,6 +31,7 @@ namespace TrackEditor
             DefaultSegmentEditor.AddCommand(new RasterizeCommand());
             DefaultSegmentEditor.AddCommand(new RasterizeLineCommand());
             DefaultSegmentEditor.AddCommand(new SegmentsReverseCommand());
+            DefaultSegmentEditor.AddCommand(new VectorizationCommand());
             DefaultAnchorEditor.AddCommand(new TryAddSegmentCommand());
             Editor.EditorState = _segmentEditor;
         }
@@ -217,6 +218,11 @@ namespace TrackEditor
             }
             var window = new CellMergePopup();
             window.ShowDialog();
+        }
+
+        private void Vectorize(object sender, RoutedEventArgs e)
+        {
+            Editor.RunCommand(VectorizationCommand.CommandName);
         }
     }
 }
