@@ -4,6 +4,7 @@ using Controls.Collection;
 using Graph.Graph;
 using Graph.Graph.Reference;
 using SpecificControls.Selection;
+using System.Windows.Documents;
 
 namespace SpecificControls.Canvases;
 
@@ -63,12 +64,18 @@ public partial class MyPointCanvas: PointCanvas
         if (Target is null) return;
         _syncMap = new(Target.Graph.NotifyAnchorCollection,
             Target.Graph.AnchorCollection, PointList,
-            a => new MyTracablePoint(a, Target, PositionType.Position, GetMovable),
+            InitTracablePoint,
             true)
         {
             CleanUp = CleanUpAnchor
         };
         _syncMap.Rebuild();
+    }
+
+    private TracablePoint InitTracablePoint(AnchorReference anchor)
+    {
+        if (Target == null) throw new InvalidOperationException("Target is null"); 
+        return new MyTracablePoint(anchor, Target, PositionType.Position, GetMovable);
     }
 
     private static void CleanUpAnchor(TracablePoint point)

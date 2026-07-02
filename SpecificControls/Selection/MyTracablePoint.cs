@@ -61,12 +61,7 @@ public class MyTracablePoint : TracablePoint, IDisposable
 
     private Point GetPosition()
     {
-        return _type switch
-        {
-            PositionType.Position => _anchor.Position.ToPoint(),
-            PositionType.PLast => _anchor.PLast.ToPoint(),
-            _ => _anchor.PNext.ToPoint(),
-        };
+        return _anchor.GetPosition(_type).ToPoint();
     }
 
     private string? GetSelectionGroup()
@@ -92,11 +87,10 @@ public class MyTracablePoint : TracablePoint, IDisposable
         if (_movable == null || !_movable()) return;
         var d = ((Point)delta).ToBPoint();
         var transform = new PointTransform();
-        foreach (var point in points)
+        foreach (var point in points.OfType<MyTracablePoint>())
         {
-            if (point is not MyTracablePoint myPoint) continue;
-            var pos = myPoint._anchor.Position;
-            transform.Add(new PositionChanger(myPoint._anchor, myPoint._type, d + pos));
+            var pos = point.WorldPosition.ToBPoint();
+            transform.Add(new PositionChanger(point._anchor, point._type, d + pos));
         }
         _graph.Execute(transform);
     }

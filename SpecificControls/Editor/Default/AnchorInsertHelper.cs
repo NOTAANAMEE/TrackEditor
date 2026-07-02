@@ -17,18 +17,7 @@ public class AnchorInsertHelper
     {
         var segment = ClosestSegment(graph, worldPos, out var t);
         if (segment == null) return new ComplexTransform();
-        segment.Segment.Split(t, out var leftSeg, out var rightSeg);
-        var anchor = new AnchorReference(leftSeg.P3, leftSeg.P2, rightSeg.P1);
-        var command = new ComplexTransform();
-        command.Add(new SegmentRemoveTransform(segment, graph));
-        var pointTransform = new PointTransform();
-        pointTransform.Add(new PositionChanger(segment.From, PositionType.PNext, leftSeg.P1));
-        pointTransform.Add(new PositionChanger(segment.To, PositionType.PLast, rightSeg.P2));
-        command.Add(pointTransform);
-        command.Add(new AnchorAddTransform(anchor));
-        command.Add(new SegmentAddTransform(new(segment.From, anchor), graph[segment]));
-        command.Add(new SegmentAddTransform(new(anchor, segment.To)));
-        return command;
+        return new AnchorInsertOnSegmentTransform(segment, t, graph);
     }
 
     private static SegmentReference? ClosestSegment(BezierGraph graph, Point worldPos, out double t)

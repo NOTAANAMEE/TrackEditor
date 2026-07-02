@@ -13,6 +13,8 @@ public abstract class TracablePoint: Selectable
 
     public virtual double Y { get; }
 
+    public bool Tracing = false;
+
     internal void SetParent(MyThumb parent)
     {
         _parent = parent;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -134,16 +135,13 @@ public partial class PointCanvas : MyCanvas
             BorderBrush = Brushes.Black,
             BorderThickness = new Thickness(1),
         };
-        thumb.Click += Thumb_Click;
-        thumb.DragDelta += Thumb_DragDelta;
+        thumb.Click                += Thumb_Click;
+        thumb.DragDelta            += Thumb_DragDelta;
         thumb.WorldPositionChanged += Thumb_WorldPositionChanged;
-        thumb.DragCompleted += Thumb_DragCompleted;
-        thumb.DragStarted += Thumb_DragStarted;
-        var pos = WorldToCanvasPoint(point.WorldPosition);
+        thumb.DragCompleted        += Thumb_DragCompleted;
+        thumb.DragStarted          += Thumb_DragStarted;
         Children.Add(thumb);
-        SetLeft(thumb, pos.X - 2.5);
-        SetTop(thumb, pos.Y - 2.5);
-        InvalidateVisual();
+        Thumb_WorldPositionChanged(thumb, thumb._point.WorldPosition);
     }
 
     private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
@@ -204,6 +202,12 @@ public partial class PointCanvas : MyCanvas
     {
         if (sender is not MyThumb thumb) return;
         var pos = WorldToCanvasPoint(e);
+        if (thumb._point.Tracing)
+        {
+            Debug.Write($"Point:{e}, ");
+            Debug.Write($"pos2: {thumb._point.WorldPosition}, pos3:");
+            Debug.WriteLine(pos.ToString());
+        }
         SetLeft(thumb, pos.X - thumb.Width / 2);
         SetTop(thumb, pos.Y - thumb.Height / 2);
     }

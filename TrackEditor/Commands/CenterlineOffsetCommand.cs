@@ -1,4 +1,5 @@
 ﻿using Graph.Command;
+using Graph.Graph;
 using Graph.Graph.Reference;
 using SpecificControls.Editor;
 using SpecificControls.Editor.Default;
@@ -30,14 +31,44 @@ public class CenterlineOffsetCommand() : EditorStateCommand(CommandName)
         args.Graph.Execute(transform);
     }
 
-    private static CenterlineOffsetFitTransform Command(
+    private static ComplexTransform Command(
         EditorSignalArgs args, double offset, LeftRightEnum leftRight)
     {
         var list = new List<SegmentReference>();
-        foreach (var seg in args.Selectables)
+        var transforms = GetSegments(
+            args.Graph.Graph, 
+            args.Selectables.OfType<MyTracableSegment>().Select(a => a.SegmentReference))
+            .Select(a => new CenterlineOffsetFitTransform(a, offset, leftRight));
+        return new ComplexTransform([..transforms]);
+    }
+
+    private static List<IEnumerable<SegmentReference>> GetSegments(
+        BezierGraph graph,
+        IEnumerable<SegmentReference> segments)
+    {
+        HashSet<SegmentReference> segmentSet = [.. segments];
+        HashSet<SegmentReference> visited = [];
+        var ret = new List<IEnumerable<SegmentReference>>();
+        foreach (var segment in segmentSet)
         {
-            if (seg is MyTracableSegment segment) list.Add(segment.SegmentReference);
+            if (visited.Contains(segment)) continue;
+            visited.Add(segment);
+            var last = segment;
+            var next = segment;
+            while (graph.TryGetLastSegment(last, out var seg) 
+                && segmentSet.Contains(seg) && seg != next)
+            {
+                visited.Add(seg);
+                last = seg;
+            }
+            while (graph.TryGetNextSegment(next, out var seg) 
+                && segmentSet.Contains(seg) && seg != last)
+            {
+                visited.Add(seg);
+                next = seg;
+            }
+            ret.Add(graph.GetSegmentsFromTo(last.From, next.To));
         }
-        return new CenterlineOffsetFitTransform(list, offset, leftRight);
+        return ret;
     }
 }

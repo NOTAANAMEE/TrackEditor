@@ -32,4 +32,17 @@ public class SegmentReference(AnchorReference from, AnchorReference to)
     {
         return HashCode.Combine(From, To);
     }
+
+    public static bool operator ==(SegmentReference? a, SegmentReference? b)
+    {
+        if (ReferenceEquals(a, b)) return true;
+        if (a is null && b is null) return true;
+        if (a is null || b is null) return false;
+        return a.Equals(b);
+    }
+
+    public static bool operator !=(SegmentReference? a, SegmentReference? b)
+    {
+        return !(a == b);
+    }
 }

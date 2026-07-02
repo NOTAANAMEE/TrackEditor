@@ -53,7 +53,10 @@ public class AnchorReference
             PositionType.PNext => _source.PNext,
             _ => throw new ArgumentException("invalid type")
         };
-        if (_parent == null) return bPoint;
+        if (_parent == null)
+        {
+            return bPoint;
+        }
         return _parent.ToWorldPoint(bPoint);
     }
 

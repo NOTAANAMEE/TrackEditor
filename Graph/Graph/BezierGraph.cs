@@ -203,13 +203,13 @@ public partial class BezierGraph
         if (reference._parent != null)
             throw new InvalidOperationException("AnchorReference already belongs to a graph.");
         var anchor = reference._source;
-        _adjacentList.AddAnchor(anchor, property);
         var position = ToCurrentPoint(anchor.Position);
         var pLast = ToCurrentPoint(anchor.PLast);
         var pNext = ToCurrentPoint(anchor.PNext);
         anchor.Position = position;
         anchor.PLast = pLast;
         anchor.PNext = pNext;
+        _adjacentList.AddAnchor(anchor, property);
         reference._parent = this;
     }
 
@@ -534,6 +534,10 @@ public partial class BezierGraph
         return true;
     }
 
+    public bool TryGetNextSegment(SegmentReference segment,
+        [NotNullWhen(true)] out SegmentReference? reference)
+        => TryGetNextSegment(segment.To, out reference);
+
     /// <summary>
     /// Gets the outgoing segment from an anchor.
     /// </summary>
@@ -568,6 +572,10 @@ public partial class BezierGraph
         reference = ToSegmentReference(last, anchor._source);
         return true;
     }
+
+    public bool TryGetLastSegment(SegmentReference segment,
+        [NotNullWhen(true)] out SegmentReference? reference)
+        => TryGetLastSegment(segment.From, out reference);
 
     /// <summary>
     /// Gets the incoming segment for an anchor.
