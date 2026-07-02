@@ -9,11 +9,15 @@ internal static class LoadTrackOperation
 {
     public static void LoadTrack(string path, double scaleX, double scaleY)
     {
-        var arr = JArray.Parse(File.ReadAllText(path));
-        var graph = new GraphChanger(
-                TrackLoader.ReadGraph(arr, scaleX, scaleY));
-        var info = new GraphInfo(graph);
-        MainEditor.Instance.GraphInfos.Add(info);
-        MainEditor.Instance.SelectedGraph = info;
+        var obj = JObject.Parse(File.ReadAllText(path));
+        var graphs = TrackLoader.ReadGraph(obj, scaleX, scaleY);
+
+        var infos = graphs.Select(a => new GraphInfo(new(a)));
+        foreach (var info in infos)
+        {
+            MainEditor.Instance.GraphInfos.Add(info);
+        }
+        if (infos.Any())
+            MainEditor.Instance.SelectedGraph = infos.First();
     }
 }

@@ -249,5 +249,21 @@ namespace TrackEditor
         {
             Close();
         }
+
+        private void SaveBlenderScript(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Title = "Export Script",
+                Filter = "Python File (*.py)|*.py|All files (*.*)|*.*",
+                DefaultExt = ".py",
+                FileName = "blender_script.py"
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                var path = dialog.FileName;
+                File.WriteAllText(path, Script.GetScript.Script);
+            }
+        }
     }
 }

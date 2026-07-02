@@ -131,12 +131,23 @@ public readonly struct BBezierSegment(BPoint p0, BPoint p1, BPoint p2, BPoint p3
             var d = p - point;
             var dp = GetDerivative(t);
             var ddp = GetSecondDerivative(t);
+
             var numerator = d.X * dp.X + d.Y * dp.Y;
             var denominator = dp.X * dp.X + dp.Y * dp.Y + d.X * ddp.X + d.Y * ddp.Y;
-            if (denominator == 0) break;
+
+            if (Math.Abs(denominator) < epsilon)
+                break;
+
             var dt = -numerator / denominator;
-            t += dt;
-            if (Math.Abs(dt) < epsilon) break;
+            var nextT = Math.Clamp(t + dt, 0, 1);
+
+            if (Math.Abs(nextT - t) < epsilon)
+            {
+                t = nextT;
+                break;
+            }
+
+            t = nextT;
         }
         var closestPoint = GetPoint(t);
         return (point - closestPoint).Length2;

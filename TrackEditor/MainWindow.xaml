@@ -22,6 +22,8 @@
                 <MenuItem Header="Save Image" Click="MenuItem_Click"/>
                 <MenuItem Header="Save Selected Image" Click="MenuItem_Click_2"/>
                 <Separator/>
+                <MenuItem Header="Blender Script" Click="SaveBlenderScript"/>
+                <Separator/>
                 <MenuItem Header="E_xit" Click="Exit"/>
             </MenuItem>
             <MenuItem Header="_Edit">

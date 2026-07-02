@@ -61,6 +61,8 @@ public class AnchorInsertOnSegmentTransform: CommandBase
 
     public override void Undo(BezierGraph graph)
     {
+        graph.RemoveSegment(_last);
+        graph.RemoveSegment(_next);
         graph.RemoveAnchor(Reference);
         graph.ChangePosition([
             new PositionChanger(_segment.From, PositionType.PNext, _fromPNext),

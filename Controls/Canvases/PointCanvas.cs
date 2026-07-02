@@ -140,9 +140,10 @@ public partial class PointCanvas : MyCanvas
         thumb.DragCompleted += Thumb_DragCompleted;
         thumb.DragStarted += Thumb_DragStarted;
         var pos = WorldToCanvasPoint(point.WorldPosition);
+        Children.Add(thumb);
         SetLeft(thumb, pos.X - 2.5);
         SetTop(thumb, pos.Y - 2.5);
-        Children.Add(thumb);
+        InvalidateVisual();
     }
 
     private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
