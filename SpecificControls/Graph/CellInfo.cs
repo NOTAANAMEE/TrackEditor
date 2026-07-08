@@ -8,11 +8,9 @@ public class CellInfo: IInfo
 {
     private static int Ids = 0;
 
-    public required bool[,] Cells;
-
     public required Point TopLeft;
 
-    public required bool FlipY;
+    public bool FlipY;
 
     private readonly int id = Ids++;
 
@@ -20,22 +18,14 @@ public class CellInfo: IInfo
 
     public string Name => $"Map {id}";
 
-    public byte R;
+    public int Width => Bitmap.PixelWidth;
 
-    public byte G;
+    public int Height => Bitmap.PixelHeight;
 
-    public byte B;
+    public required BitmapSource Bitmap;
 
-    public byte A;
-
-    public int Width => Cells.GetLength(0);
-
-    public int Height => Cells.GetLength(1);
-
-    public WriteableBitmap ToBitmap()
+    public static WriteableBitmap ToBitmap(bool[,] cells, bool flipY, byte R, byte G, byte B, byte A)
     {
-        var cells = Cells;
-        var flipY = FlipY;
         var width = cells.GetLength(0);
         var height = cells.GetLength(1);
 

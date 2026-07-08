@@ -27,7 +27,7 @@ public static class ImageSaver
             {
                 var curLeft = cell.TopLeft.X - left;
                 var curTop = cell.TopLeft.Y - top;
-                dc.DrawImage(cell.ToBitmap(),
+                dc.DrawImage(cell.Bitmap,
                     new Rect(curLeft, curTop, cell.Width, cell.Height));
             }
         }

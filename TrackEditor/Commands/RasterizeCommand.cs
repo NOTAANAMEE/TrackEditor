@@ -50,13 +50,8 @@ public class RasterizeCommand() : EditorStateCommand(CommandName)
         }
         return new()
         {
-            Cells = cells,
+            Bitmap = CellInfo.ToBitmap(cells, true, color.R, color.G, color.B, color.A),
             TopLeft = new BPoint(left, top).ToPoint(),
-            FlipY = true,
-            R = color.R,
-            G = color.G,
-            B = color.B,
-            A = 255
         };
     }
 

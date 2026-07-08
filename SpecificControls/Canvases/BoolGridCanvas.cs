@@ -16,7 +16,7 @@ public partial class BoolGridCanvas : Canvas
         set => SetValue(CellInfoProperty, value);
     }
 
-    private WriteableBitmap? _bitmap;
+    private BitmapSource? _bitmap;
 
     public double ScaleX
     {
@@ -43,7 +43,7 @@ public partial class BoolGridCanvas : Canvas
 
     private void SetBitmap()
     {
-        if (CellInfo != null) _bitmap = CellInfo.ToBitmap();
+        if (CellInfo != null) _bitmap = CellInfo.Bitmap;
         else _bitmap = null;
     }
 
