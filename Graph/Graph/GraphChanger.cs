@@ -17,12 +17,15 @@ public class GraphChanger(BezierGraph graph)
 
     public IEnumerable<CommandBase> RedoCommands => _redoCommands;
 
+    public EventHandler<EventArgs>? OnCommandExecute;
+
     public void Undo()
     {
         if (_activeCommands.Count == 0) return;
         var cmd = _activeCommands.Pop();
         cmd.Undo(Graph);
         _redoCommands.Push(cmd);
+        OnCommandExecute?.Invoke(this, EventArgs.Empty);
     }
 
     public void Redo()
@@ -31,6 +34,7 @@ public class GraphChanger(BezierGraph graph)
         var cmd = _redoCommands.Pop();
         cmd.Execute(Graph);
         _activeCommands.Push(cmd);
+        OnCommandExecute?.Invoke(this, EventArgs.Empty);
     }
 
     public void Execute(CommandBase cmd)
@@ -38,6 +42,7 @@ public class GraphChanger(BezierGraph graph)
         cmd.Execute(Graph);
         _activeCommands.Push(cmd);
         _redoCommands.Clear();
+        OnCommandExecute?.Invoke(this, EventArgs.Empty);
     }
 
 }

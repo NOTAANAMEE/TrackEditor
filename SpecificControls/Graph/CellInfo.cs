@@ -4,27 +4,25 @@ using System.Windows.Media.Imaging;
 
 namespace SpecificControls.Graph;
 
-public class CellInfo: IInfo
+public class CellInfo(string name): IInfo
 {
     private static int Ids = 0;
 
     public required Point TopLeft;
 
-    public bool FlipY;
+    public required BitmapSource Bitmap;
 
-    private readonly int id = Ids++;
-
-    public int Id => id;
-
-    public string Name => $"Map {id}";
+    public string Name => name;
 
     public int Width => Bitmap.PixelWidth;
 
     public int Height => Bitmap.PixelHeight;
 
-    public required BitmapSource Bitmap;
+    public CellInfo(): this($"Map {Ids++}") { }
 
-    public static WriteableBitmap ToBitmap(bool[,] cells, bool flipY, byte R, byte G, byte B, byte A)
+    public static WriteableBitmap ToBitmap(
+        bool[,] cells, bool flipY, 
+        byte R, byte G, byte B, byte A)
     {
         var width = cells.GetLength(0);
         var height = cells.GetLength(1);

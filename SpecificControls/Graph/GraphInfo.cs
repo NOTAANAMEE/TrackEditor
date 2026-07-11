@@ -2,13 +2,13 @@
 
 namespace SpecificControls.Graph;
 
-public class GraphInfo(GraphChanger graph) : IInfo
+public class GraphInfo(GraphChanger graph, string name) : IInfo
 {
     private static int UniversalId = 0;
 
-    private readonly int _id = UniversalId++;
+    public GraphInfo(GraphChanger graph) : this(graph, $"Graph {UniversalId++}") { }
 
-    public string Name => $"Graph {_id}";
+    public string Name => name;
 
-    public  GraphChanger Graph => graph;
+    public GraphChanger Graph => graph;
 }

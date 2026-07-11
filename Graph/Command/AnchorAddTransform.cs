@@ -9,11 +9,9 @@ namespace Graph.Command;
 
 public class AnchorAddTransform(AnchorReference reference): CommandBase
 {
-    private readonly MyProperty _property = new();
-
     public override void Execute(BezierGraph graph)
     {
-        graph.AddAnchorWithProperty(reference, _property);
+        graph.AddAnchorWithProperty(reference, new());
     }
 
     public override void Undo(BezierGraph graph)
@@ -24,14 +22,12 @@ public class AnchorAddTransform(AnchorReference reference): CommandBase
 
 public class AnchorsAddTransform(IEnumerable<AnchorReference> references) : CommandBase
 {
-    private readonly MyProperty[] _properties = [.. references.Select(a => new MyProperty())];
     private readonly AnchorReference[] _references = [..references];
 
     public override void Execute(BezierGraph graph)
     {
-        var i = 0;
         foreach (var reference in _references)
-            graph.AddAnchorWithProperty(reference, _properties[i++]);
+            graph.AddAnchorWithProperty(reference, new());
     }
 
     public override void Undo(BezierGraph graph)
@@ -51,7 +47,7 @@ public class AnchorsAddTransformWithProperty(IEnumerable<AnchorReference> refere
     {
         var i = 0;
         foreach (var reference in _references)
-            graph.AddAnchorWithProperty(reference, _properties[i++]);
+            graph.AddAnchorWithProperty(reference, _properties[i++].Copy());
     }
 
     public override void Undo(BezierGraph graph)
@@ -61,12 +57,11 @@ public class AnchorsAddTransformWithProperty(IEnumerable<AnchorReference> refere
     }
 }
 
-
 public class SimpleAnchorsRemoveTransform(
     IEnumerable<AnchorReference> anchors, BezierGraph graph): CommandBase
 {
     private readonly AnchorReference[] _anchors = [..anchors];
-    private readonly MyProperty[] _properties = [..anchors.Select(a => graph[a])];
+    private readonly MyProperty[] _properties = [..anchors.Select(a => graph[a].Copy())];
 
     public override void Execute(BezierGraph graph)
     {
@@ -78,7 +73,7 @@ public class SimpleAnchorsRemoveTransform(
     {
         int ind = 0;
         foreach (var anchor in _anchors)
-            graph.AddAnchorWithProperty(anchor, _properties[ind++]);
+            graph.AddAnchorWithProperty(anchor, _properties[ind++].Copy());
     }
 }
 
@@ -90,7 +85,7 @@ public class SegmentAddTransform(SegmentReference reference, MyProperty property
 
     public override void Execute(BezierGraph graph)
     {
-        graph.AddSegmentWithProperty(reference, _property);
+        graph.AddSegmentWithProperty(reference, _property.Copy());
     }
 
     public override void Undo(BezierGraph graph)
@@ -101,15 +96,12 @@ public class SegmentAddTransform(SegmentReference reference, MyProperty property
 
 public class SegmentsAddTransform(IEnumerable<SegmentReference> references): CommandBase
 {
-    private readonly List<MyProperty> _properties = [.. references.Select(a => new MyProperty())];
-
     private readonly SegmentReference[] _segments = [.. references];
 
     public override void Execute(BezierGraph graph)
     {
-        var i = 0;
         foreach (var reference in _segments)
-            graph.AddSegmentWithProperty(reference, _properties[i++]);
+            graph.AddSegmentWithProperty(reference, new());
     }
 
     public override void Undo(BezierGraph graph)
@@ -132,7 +124,7 @@ public class SegmentsAddPropertyTransform(
     {
         var i = 0;
         foreach (var reference in _segments)
-            graph.AddSegmentWithProperty(reference, _properties[i++]);
+            graph.AddSegmentWithProperty(reference, _properties[i++].Copy());
     }
 
     public override void Undo(BezierGraph graph)
@@ -144,7 +136,7 @@ public class SegmentsAddPropertyTransform(
 
 public class SegmentRemoveTransform(SegmentReference reference, BezierGraph graph) : CommandBase
 {
-    private readonly MyProperty _property = graph[reference];
+    private readonly MyProperty _property = graph[reference].Copy();
 
     public override void Execute(BezierGraph graph)
     {
@@ -153,13 +145,13 @@ public class SegmentRemoveTransform(SegmentReference reference, BezierGraph grap
 
     public override void Undo(BezierGraph graph)
     {
-        graph.AddSegmentWithProperty(reference, _property);
+        graph.AddSegmentWithProperty(reference, _property.Copy());
     }
 }
 
 public class SegmentsRemoveTransform(IEnumerable<SegmentReference> references, BezierGraph graph) : CommandBase
 {
-    private readonly MyProperty[] _property = [.. references.Select(a => graph[a])];
+    private readonly MyProperty[] _property = [.. references.Select(a => graph[a].Copy())];
     private readonly SegmentReference[] _segments = [.. references];
 
     public override void Execute(BezierGraph graph)
@@ -172,6 +164,6 @@ public class SegmentsRemoveTransform(IEnumerable<SegmentReference> references, B
     {
         int i = 0;
         foreach (var reference in _segments)
-            graph.AddSegmentWithProperty(reference, _property[i++]);
+            graph.AddSegmentWithProperty(reference, _property[i++].Copy());
     }
 }
